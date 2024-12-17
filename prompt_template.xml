@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ProjectPrompt xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Metadata>
+        <Version>1.0.0</Version>
+        <Author>AI Resource Library Team</Author>
+        <CreatedAt>2024-12-17T01:13:01-08:00</CreatedAt>
+        <Category>Next.js Project Setup</Category>
+        <Priority>High</Priority>
+    </Metadata>
+
+    <ProjectRequirements>
+        <Framework>
+            <Name>Next.js</Name>
+            <Version>14.2.0</Version>
+            <Features>
+                <Feature>App Router</Feature>
+                <Feature>TypeScript</Feature>
+                <Feature>Server-Side Rendering</Feature>
+            </Features>
+        </Framework>
+        <Dependencies>
+            <Core>
+                <Package name="react" version="18.2.0" />
+                <Package name="typescript" version="5.3.3" />
+                <Package name="tailwindcss" version="3.4.0" />
+            </Core>
+            <Development>
+                <Package name="eslint" version="8.56.0" />
+                <Package name="@types/react" version="18.2.46" />
+            </Development>
+        </Dependencies>
+    </ProjectRequirements>
+
+    <InitializationSequence>
+        <Step order="1" critical="true">
+            <Action>Directory Preparation</Action>
+            <Command>Validate empty directory or clean existing</Command>
+            <Validation>
+                <Check>No conflicting files</Check>
+                <Check>Proper permissions</Check>
+            </Validation>
+        </Step>
+        <Step order="2" critical="true">
+            <Action>Project Creation</Action>
+            <Command>npx create-next-app@latest .</Command>
+            <Options>
+                <Option>--typescript</Option>
+                <Option>--tailwind</Option>
+                <Option>--eslint</Option>
+                <Option>--app</Option>
+                <Option>--src-dir</Option>
+                <Option>--import-alias @/*</Option>
+            </Options>
+        </Step>
+        <Step order="3" critical="true">
+            <Action>Configuration Setup</Action>
+            <Files>
+                <File path="tsconfig.json">
+                    <Property>moduleResolution</Property>
+                    <Property>paths</Property>
+                </File>
+                <File path="next.config.mjs">
+                    <Property>mdx</Property>
+                    <Property>images</Property>
+                </File>
+            </Files>
+        </Step>
+    </InitializationSequence>
+
+    <ProjectStructure>
+        <Directory path="src">
+            <Directory path="lib">
+                <File>constants.ts</File>
+                <File>utils.ts</File>
+            </Directory>
+            <Directory path="components">
+                <Directory path="layout">
+                    <File>Header.tsx</File>
+                    <File>Footer.tsx</File>
+                </Directory>
+                <Directory path="ui" />
+            </Directory>
+            <Directory path="app">
+                <File>layout.tsx</File>
+                <File>page.tsx</File>
+                <File>globals.css</File>
+            </Directory>
+            <Directory path="content">
+                <Directory path="guides" />
+                <Directory path="prompts" />
+                <Directory path="techniques" />
+            </Directory>
+        </Directory>
+    </ProjectStructure>
+
+    <ValidationChecks>
+        <Check type="TypeScript">
+            <Command>tsc --noEmit</Command>
+            <ExpectedOutcome>No type errors</ExpectedOutcome>
+        </Check>
+        <Check type="Linting">
+            <Command>npm run lint</Command>
+            <ExpectedOutcome>No linting errors</ExpectedOutcome>
+        </Check>
+        <Check type="Build">
+            <Command>npm run build</Command>
+            <ExpectedOutcome>Successful build</ExpectedOutcome>
+        </Check>
+    </ValidationChecks>
+
+    <ErrorPrevention>
+        <CommonIssues>
+            <Issue>
+                <Problem>Module Resolution</Problem>
+                <Solution>Verify tsconfig.json paths</Solution>
+                <Prevention>Use path alias validation</Prevention>
+            </Issue>
+            <Issue>
+                <Problem>Dependency Conflicts</Problem>
+                <Solution>Use exact versions</Solution>
+                <Prevention>Regular dependency audits</Prevention>
+            </Issue>
+        </CommonIssues>
+        <QualityChecks>
+            <Check>TypeScript strict mode enabled</Check>
+            <Check>ESLint configuration complete</Check>
+            <Check>Component isolation verified</Check>
+        </QualityChecks>
+    </ErrorPrevention>
+
+    <Documentation>
+        <Required>
+            <File>README.md</File>
+            <File>DEVLOG.md</File>
+            <File>PROJECT_ANALYSIS.md</File>
+        </Required>
+        <Standards>
+            <Standard>Component documentation</Standard>
+            <Standard>Type definitions</Standard>
+            <Standard>Setup instructions</Standard>
+        </Standards>
+    </Documentation>
+
+    <MaintenanceProtocol>
+        <Schedule>
+            <Task frequency="weekly">Dependency updates</Task>
+            <Task frequency="daily">Type checking</Task>
+            <Task frequency="continuous">Code quality monitoring</Task>
+        </Schedule>
+        <Automation>
+            <Tool>GitHub Actions</Tool>
+            <Tool>Dependabot</Tool>
+            <Tool>CodeQL</Tool>
+        </Automation>
+    </MaintenanceProtocol>
+</ProjectPrompt>

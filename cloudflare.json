@@ -1,7 +1,7 @@
 {
   "build": {
     "command": "npm run build",
-    "output": ".next",
+    "output": "dist",
     "environment": {
       "NODE_VERSION": "18"
     }
@@ -11,6 +11,12 @@
       "pattern": "/_next/static/*",
       "headers": {
         "cache-control": "public,max-age=31536000,immutable"
+      }
+    },
+    {
+      "pattern": "/*",
+      "headers": {
+        "cache-control": "public,max-age=0,must-revalidate"
       }
     }
   ]

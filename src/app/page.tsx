@@ -1,58 +1,67 @@
+'use client'
+
+import { useState } from 'react'
 import Link from 'next/link'
-import { NAVIGATION_ITEMS } from '@/lib/constants'
+import ResourceCard from '@/components/ui/ResourceCard'
+import SearchBar from '@/components/ui/SearchBar'
+
+const DEMO_RESOURCES = [
+  {
+    title: 'Getting Started Guide',
+    description: 'Learn the basics of using our AI resource library',
+    category: 'Guide',
+    link: '/guides/getting-started',
+  },
+  {
+    title: 'Prompt Engineering',
+    description: 'Master the art of writing effective prompts',
+    category: 'Tutorial',
+    link: '/tutorials/prompt-engineering',
+  },
+  {
+    title: 'Best Practices',
+    description: 'Learn industry best practices for AI development',
+    category: 'Best Practices',
+    link: '/guides/best-practices',
+  },
+]
 
 export default function Home() {
+  const [filteredResources, setFilteredResources] = useState(DEMO_RESOURCES)
+
+  const handleSearch = (query: string) => {
+    const filtered = DEMO_RESOURCES.filter(
+      (resource) =>
+        resource.title.toLowerCase().includes(query.toLowerCase()) ||
+        resource.description.toLowerCase().includes(query.toLowerCase()) ||
+        resource.category.toLowerCase().includes(query.toLowerCase())
+    )
+    setFilteredResources(filtered)
+  }
+
   return (
-    <div className="flex flex-col items-center justify-center space-y-12 text-center">
-      <section className="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32">
-        <div className="container flex max-w-[64rem] flex-col items-center gap-4 text-center">
-          <h1 className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl">
-            Welcome to AI Resource Library
-          </h1>
-          <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
-            Discover comprehensive guides, prompts, and techniques for AI development. 
-            Your one-stop resource for mastering artificial intelligence.
-          </p>
-        </div>
+    <div className="space-y-8">
+      <section className="text-center py-12">
+        <h1 className="text-4xl font-bold tracking-tight sm:text-6xl mb-4">
+          AI Resource Library
+        </h1>
+        <p className="text-lg text-zinc-600 dark:text-zinc-400 mb-8">
+          Your gateway to AI development resources and knowledge
+        </p>
+        <SearchBar onSearch={handleSearch} />
       </section>
 
-      <section className="container space-y-6 py-8 md:py-12 lg:py-24">
-        <div className="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3">
-          {NAVIGATION_ITEMS.map((item) => (
-            <div
-              key={item.href}
-              className="relative overflow-hidden rounded-lg border bg-background p-2"
-            >
-              <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-                <div className="space-y-2">
-                  <h3 className="font-bold">{item.name}</h3>
-                  <p className="text-sm text-muted-foreground">
-                    {getDescription(item.name)}
-                  </p>
-                </div>
-                <Link
-                  href={item.href}
-                  className="inline-flex items-center rounded-lg bg-primary px-3 py-2 text-sm font-medium text-primary-foreground"
-                >
-                  Learn more
-                  <svg
-                    className="ml-2 h-4 w-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </Link>
-              </div>
-            </div>
+      <section className="py-8">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {filteredResources.map((resource) => (
+            <ResourceCard key={resource.link} {...resource} />
           ))}
         </div>
+        {filteredResources.length === 0 && (
+          <div className="text-center py-12 text-zinc-600 dark:text-zinc-400">
+            No resources found. Try a different search term.
+          </div>
+        )}
       </section>
     </div>
   )
